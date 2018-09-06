@@ -262,6 +262,7 @@
         var map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: 37.7747938, lng: -122.4061669,},
           zoom: 11,
+          disableDefaultUI: true,
           /*mapTypeControlOptions: {
             mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
                     'styled_map']
@@ -286,13 +287,14 @@
           { 'id': 'ST', 'name': 'SolTrans' },
           { 'id': 'VN', 'name': 'Napa' },
           { 'id': 'WH', 'name': 'Wheels' }, // Livermore Amador Valley Transit Authority
+          { 'id': 'WC', 'name': 'WestCat' },
         ];
         const csv_filenames = [
-        //    'Current_15', // Map 1
-        //  'Current_20',
-       //    'Future_15', // Map 2
-          // 'Future_20',
-           'Longer_Hours', // Map 3
+            'Current_15', // Map 1
+            'Current_20',
+           // 'Future_15', // Map 2
+         //   'Future_20',
+        //   'Longer_Hours', // Map 3
         ];
 
         const showNewPlan = false;
@@ -329,6 +331,19 @@
         script.src = `https://maps.googleapis.com/maps/api/js?key=${key.googleMapsKey}&callback=initMap`;
         document.body.appendChild(script);
     </script>
+    <style>
+      a[href^="http://maps.google.com/maps"],
+      a[href^="https://maps.google.com/maps"],
+      a[href^="https://www.google.com/maps"] {
+          display: none !important;
+      }
+      .gm-bundled-control .gmnoprint {
+          display: block;
+      }
+      .gmnoprint:not(.gm-bundled-control) {
+          display: none;
+      }
+    </style>
   </body>
 </html>
 
