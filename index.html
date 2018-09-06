@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Move Bay Area Map</title>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <style>
+      /* Always set the map height explicitly to define the size of the div
+       * element that contains the map. */
+      #map {
+        height: 100%;
+      }
+      /* Optional: Makes the sample page fill the window. */
+      html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="map"></div>
+    <script type="text/javascript" src="key.json"></script>
+    <script>
+      function initMap() {
+
+        // Create a new StyledMapType object, passing it an array of styles,
+        // and the name to be displayed on the map type control.
+        var styledMapType = new google.maps.StyledMapType(
+          [
+            {
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#f5f5f5"
+                }
+              ]
+            },
+            {
+              "elementType": "labels.icon",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#616161"
+                }
+              ]
+            },
+            {
+              "elementType": "labels.text.stroke",
+              "stylers": [
+                {
+                  "color": "#f5f5f5"
+                }
+              ]
+            },
+            {
+              "featureType": "administrative",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "administrative.land_parcel",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "administrative.land_parcel",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#bdbdbd"
+                }
+              ]
+            },
+            {
+              "featureType": "administrative.neighborhood",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "poi",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "poi",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#eeeeee"
+                }
+              ]
+            },
+            {
+              "featureType": "poi",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#757575"
+                }
+              ]
+            },
+            {
+              "featureType": "poi.park",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#e5e5e5"
+                }
+              ]
+            },
+            {
+              "featureType": "poi.park",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#9e9e9e"
+                }
+              ]
+            },
+            {
+              "featureType": "road",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#ffffff"
+                }
+              ]
+            },
+            {
+              "featureType": "road",
+              "elementType": "labels",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "road",
+              "elementType": "labels.icon",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "road.arterial",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#757575"
+                }
+              ]
+            },
+            {
+              "featureType": "road.highway",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#dadada"
+                }
+              ]
+            },
+            {
+              "featureType": "road.highway",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#616161"
+                }
+              ]
+            },
+            {
+              "featureType": "road.local",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#9e9e9e"
+                }
+              ]
+            },
+            {
+              "featureType": "transit",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "transit.line",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#e5e5e5"
+                }
+              ]
+            },
+            {
+              "featureType": "transit.station",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#eeeeee"
+                }
+              ]
+            },
+            {
+              "featureType": "water",
+              "elementType": "geometry",
+              "stylers": [
+                {
+                  "color": "#c9c9c9"
+                }
+              ]
+            },
+            {
+              "featureType": "water",
+              "elementType": "labels.text",
+              "stylers": [
+                {
+                  "visibility": "off"
+                }
+              ]
+            },
+            {
+              "featureType": "water",
+              "elementType": "labels.text.fill",
+              "stylers": [
+                {
+                  "color": "#9e9e9e"
+                }
+              ]
+            }
+          ],
+          {name: 'Styled Muni Map'});
+
+        // Create a map object, and include the MapTypeId to add
+        // to the map type control.
+        var map = new google.maps.Map(document.getElementById('map'), {
+          center: {lat: 37.7747938, lng: -122.4061669,},
+          zoom: 11,
+          /*mapTypeControlOptions: {
+            mapTypeIds: ['roadmap', 'satellite', 'hybrid', 'terrain',
+                    'styled_map']
+          }*/
+        });
+
+        const agencies = [ 
+          { 'id': '3D', 'name': 'TriDelta' },
+          { 'id': 'AC', 'name': 'AC' },
+          { 'id': 'BA', 'name': 'BART' },
+          { 'id': 'CC', 'name': 'CC' }, // County Connection
+          { 'id': 'CT', 'name': 'Caltrain' },
+          { 'id': 'GF', 'name': 'GGFerry' },
+          { 'id': 'GG', 'name': 'GGT' }, // Golden Gate Transit
+          { 'id': 'MA', 'name': 'MarinT' },
+          { 'id': 'SA', 'name': 'SMART' },
+          { 'id': 'SB', 'name': 'SFBayFerry' },
+          { 'id': 'SC', 'name': 'VTA' },
+          { 'id': 'SF', 'name': 'Muni' },
+          { 'id': 'SM', 'name': 'SamTrans' },
+        //  { 'id': 'SR', 'name': 'SantaRosa' }, removed because of faulty gtfs
+          { 'id': 'ST', 'name': 'SolTrans' },
+          { 'id': 'VN', 'name': 'Napa' },
+          { 'id': 'WH', 'name': 'Wheels' }, // Livermore Amador Valley Transit Authority
+        ];
+        const csv_filenames = [
+        //    'Current_15', // Map 1
+        //  'Current_20',
+       //    'Future_15', // Map 2
+          // 'Future_20',
+           'Longer_Hours', // Map 3
+        ];
+
+        const showNewPlan = false;
+        let geojson_links = ['http://eddyionescu.com/transitfeed/move_bay_area_new_projects_map/regional_plan.json']
+        if(!showNewPlan) {
+          geojson_links = [];
+          csv_filenames.forEach(csv_filename =>
+            agencies.forEach(agency => 
+            geojson_links.push(`http://eddyionescu.com/transitfeed/move_bay_area_bus_maps/${agency.name}_${csv_filename}_map.json`)
+          ));
+        }
+        geojson_links.forEach(geojson_link => map.data.loadGeoJson(geojson_link));
+
+        // add styling for geojson
+        map.data.setStyle(function(feature) {
+            return {
+              // geojson spec unfourtunatly does not define properties, here's a mapbox -> google mapping
+              strokeColor: feature.getProperty('stroke'),
+              strokeOpacity: feature.getProperty('stroke-opacity'),
+              strokeWeight: feature.getProperty('stroke-width'),
+            };
+        });
+
+
+        //Associate the styled map with the MapTypeId and set it to display.
+        map.mapTypes.set('styled_map', styledMapType);
+        map.setMapTypeId('styled_map');
+      }
+    </script>
+
+    <script async defer>
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.src = `https://maps.googleapis.com/maps/api/js?key=${key.googleMapsKey}&callback=initMap`;
+        document.body.appendChild(script);
+    </script>
+  </body>
+</html>
+
+
