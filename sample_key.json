@@ -1,0 +1,3 @@
+var key = {
+  "googleMapsKey": "YOUR_API_KEY"
+}
